@@ -161,11 +161,8 @@ ece:		expression comp expression
    		{printf("ece->expression comp expression\n");}
 		;
 
-comp:		EQ
-    		{printf("comp->EQ\n");}
-		| NEQ
-		  {printf("comp->NEQ\n");}
-		| LT
+comp:		
+		LT
 		  {printf("comp->LT\n");}
 		| GT
 		  {printf("comp->GT\n");}
@@ -173,6 +170,10 @@ comp:		EQ
 		  {printf("comp->LTE\n");}
 		| GTE
 		  {printf("comp->GTE\n");}
+		|  EQ
+    		{printf("comp->EQ\n");}
+		| NEQ
+		  {printf("comp->NEQ\n");}
 		;
 
 expression:	multi_expr addSubExpr
