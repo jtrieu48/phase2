@@ -1,0 +1,59 @@
+program -> functions
+
+functions -> function functions | (epsilon)
+
+function -> FUNCTION Ident SMICOLON BEGINPARAMS declarations ENDPARAMS BEGINLOCALS declarations ENDLOCALS BEGINBODY statements ENDBODY
+
+declarations -> declaration SEMICOLON declarations | (epsilon)
+
+declaration -> identifiers COLON INTEGER | identifiers COLON ARRAY L_SWAURE_BRACKET NUMBER R_SQUARE_BRACKET OF INTEGER
+
+identifiers -> Ident | Ident COMMA identifiers
+
+Ident -> IDENT
+
+statements -> statement SEMICOLON statements | statement SEMICOLON
+
+statement -> statementVar | statementIf | statementWhile | statementDo | statementFor | statementRead | statementWrite | statementCont | statementRet
+
+statementVar -> var ASSIGN expression
+
+statementIf -> IF boolExpr THEN statements ENDIF
+
+statementWhile -> WHILE boolExpr BEGINLOOP statements ENDLOOP
+
+statementDo -> DO BEGINLOOP statements ENDLOOP WHILE boolExpr
+
+statementFor -> FOR var ASSIGN NUMBER SEMICOLON boolExpr SEMICOLON var ASSIGN expression BEGINLOOP statements ENDLOOP
+
+varLoop -> COMMA var varLoop | (epsilon)
+
+statementRead -> READ var varLoop
+
+statementWrite -> WRITE var varLoop
+
+statementCont -> CONTINUE
+
+statementRet -> RETURN expression
+
+boolExpr -> relExprs | boolExpr OR relExprs
+
+relExprs -> relExpr | relExprs AND relExpr
+
+relExpr -> NOT ece | ece | TRUE | FALSE | LPAREN boolExpr RPAREN
+
+ece -> expression comp expression
+
+comp -> EQ | NEQ | LET | GT | LTE | GTE
+
+expression -> multExpr addSubExpr
+
+addSubExpr -> ADD expression | SUB expression | (epsilon)
+
+multExpr -> term | term MULT multExpr | term DIV multExpr | term MOD multExpr
+
+term -> SUB var | var | SUB NUMBER | NUMBER | LPAREN expression RPAREN| Ident LPAREN expression expressionLoop RPAREN
+
+expressionLoop -> COMMA expression expressionLoop | (epsilon)
+
+var -> Ident | Ident L_SQUARE_BRACKET expression R_SQUARE_BRACKET L_SQAURE BRACKET expression R_SQUARE_BRACKET | Ident L_SQUARE_BRACKET expression R_SQUARE_BRACKET
