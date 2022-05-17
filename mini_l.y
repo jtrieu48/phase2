@@ -69,23 +69,23 @@ statements:	statement SEMICOLON statements
 		| statement error {yyerrok;}
 		;
 
-statement:	statemmentVar
+statement:	statementVar
 	  	{printf("statements->statementVar\n");}
-	  	| sif
+	  	| statementIf
 		  {printf("statements->statementIf\n");}
-		| swhile
+		| statementWhile
 		  {printf("statements->statementWhile\n");}
-		| sdo
+		| statementDo
 		  {printf("statements->statementDo\n");}
-		| sfor
+		| statementFor
 		  {printf("statements->statementFor\n");}
-		| sread
+		| statementRead
 		  {printf("statements->statementRead\n");}
-		| swrite
+		| statementWrite
 		  {printf("statements->statementWrite\n");}
-		| scontinue
+		| statementCont
 		  {printf("statements->statementCont\n");}
-		| sreturn
+		| statementRet
 		  {printf("statements->statementRet\n");}
 		;
 
@@ -93,22 +93,22 @@ statementVar:		var ASSIGN expression
     		{printf("statementVar->var ASSIGN expression\n");}
 		;
 
-statementIf:		IF bool_expr THEN statements ENDIF
-   		{printf("sif->IF bool_expr THEN statements ENDIF\n");}
-		| IF bool_expr THEN statements ELSE statements ENDIF
-		{printf("sif->IF bool_expr THEN statements ELSE statements ENDIF\n");}
+statementIf:		IF boolExpr THEN statements ENDIF
+   		{printf("statementIf->IF boolExpr THEN statements ENDIF\n");}
+		| IF boolExpr THEN statements ELSE statements ENDIF
+		{printf("statementIf->IF boolExpr THEN statements ELSE statements ENDIF\n");}
 		;
 
-statementWhile:		WHILE bool_expr BEGINLOOP statements ENDLOOP
-      		{printf("swhile->WHILE bool_expr BEGINLOOP statements ENDLOOP\n");}
+statementWhile:		WHILE boolExpr BEGINLOOP statements ENDLOOP
+      		{printf("statementWhile->WHILE boolExpr BEGINLOOP statements ENDLOOP\n");}
 		;
 
-statementDo:		DO BEGINLOOP statements ENDLOOP WHILE bool_expr
-   		{printf("sdo-> DO BEGINLOOP statements ENDLOOP WHILE bool_expr\n");}
+statementDo:		DO BEGINLOOP statements ENDLOOP WHILE boolExpr
+   		{printf("statementDo-> DO BEGINLOOP statements ENDLOOP WHILE boolExpr\n");}
 		;
 
-statementFor:		FOR var ASSIGN NUMBER SEMICOLON bool_expr SEMICOLON var ASSIGN expression BEGINLOOP statements ENDLOOP
-    		{printf("statementFor-> FOR var ASSIGN NUMBER %d SEMI COLON bool_expr SEMICOLON var ASSIGN expression BEGINLOOP statements ENDLOOP\n", $4);}
+statementFor:		FOR var ASSIGN NUMBER SEMICOLON boolExpr SEMICOLON var ASSIGN expression BEGINLOOP statements ENDLOOP
+    		{printf("statementFor-> FOR var ASSIGN NUMBER %d SEMI COLON boolExpr SEMICOLON var ASSIGN expression BEGINLOOP statements ENDLOOP\n", $4);}
 		;
 
 varLoop:	/*epsilon*/
@@ -125,7 +125,7 @@ statementWrite:		WRITE var varLoop
       		{printf("statementWrite->WRITE var varLoop\n");}
 		;
 
-statemmentCont:	CONTINUE
+statementCont:	CONTINUE
 	 	{printf("statementCont->CONTINUE\n");}
 		;
 
@@ -134,27 +134,27 @@ statementRet:	RETURN expression
 		;
 
 boolExpr:	relExprs
-	 	{printf("bool_expr->relation_exprs\n");}
-		| bool_expr OR relation_exprs
-		  {printf("bool_expr->bool_expr OR relation_exprs\n");}
+	 	{printf("boolExpr->relExprs\n");}
+		| boolExpr OR relExprs
+		  {printf("boolExpr->boolExpr OR relExprs\n");}
 		;
 
 relExprs:	relExpr
-	      	{printf("relation_exprs->relation_expr\n");}
-		| relation_exprs AND relation_expr
-		  {printf("relation_exprs->relation_expres AND relation_expr\n");}
+	      	{printf("relExprs->relExprs\n");}
+		| relExprs AND relExprs
+		  {printf("relExprs->relExprs AND relExprs\n");}
 		;
 
 relExpr:	NOT ece
-	     	{printf("relation_expr->NOT ece\n");}
+	     	{printf("relExpr->NOT ece\n");}
 		| ece
-		  {printf("relation_expr->ece\n");}
+		  {printf("relExprs->ece\n");}
 		| TRUE
-		  {printf("relation_expr->TRUE\n");}
+		  {printf("relExprs->TRUE\n");}
 		| FALSE
-		  {printf("relation_expr->FALSE\n");}
-		| LPAREN bool_expr RPAREN
-		  {printf("relation_expr->LPAREN bool_expr RPAREN\n");}
+		  {printf("relExprs->FALSE\n");}
+		| LPAREN boolExpr RPAREN
+		  {printf("relExprs->LPAREN boolExpr RPAREN\n");}
 		;
 
 ece:		expression comp expression
@@ -176,8 +176,8 @@ comp:
 		  {printf("comp->NEQ\n");}
 		;
 
-expression:	multi_expr addSubExpr
-	  	{printf("expression->multi_exp addSubExpr\n");}
+expression:	multiExpr addSubExpr
+	  	{printf("expression->multiExpr addSubExpr\n");}
 		| error {yyerrok;}
 		;
 
@@ -190,13 +190,13 @@ addSubExpr:	/*epsilon*/
 		;
 
 multiExpr:	term
-	  	{printf("multi_expr->term\n");}
-		| term MULT multi_expr
-		  {printf("multi_expr->term MULT multi_expr\n");}
-		| term DIV multi_expr
-		  {printf("multi_expr->term DIV multi_expr\n");}
-		| term MOD multi_expr
-		  {printf("multi_expr->term MOD multi_expr\n");}
+	  	{printf("multiExpr->term\n");}
+		| term MULT multiExpr
+		  {printf("multiExpr->term MULT multiExpr\n");}
+		| term DIV multiExpr
+		  {printf("multiExpr->term DIV multiExpr\n");}
+		| term MOD multiExpr
+		  {printf("multiExpr->term MOD multiExpr\n");}
 		;
 
 term:		SUB var
